@@ -1,5 +1,6 @@
 #include "calculator.h"
-bool success;
+bool success = true;
 int main() {
 	success = RunCalculatorCycle();
+	success ? return 0 : return 1;
 }
