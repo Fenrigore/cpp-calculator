@@ -9,14 +9,12 @@ bool ReadNumber(Number& result)
         std::cerr << "Error: Numeric operand expected" << std::endl;
         return false;
     }
-    else {
         return true;
-    }
 }
 
 bool RunCalculatorCycle()
 {
-    Number input_number;
+    Number input_number = 0;
     Number summ = 0;
     bool is_no_error = true;
     std::string input_symbol;
