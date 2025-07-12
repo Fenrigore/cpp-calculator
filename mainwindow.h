@@ -6,19 +6,19 @@
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
 public:
-    enum class Operation{
+    enum class Operation {
         NO_OPERATION,
         ADDITION,
         SUBTRACTION,
@@ -55,16 +55,16 @@ private slots:
 private:
     void SetText(const QString& text);
     void AddText(const QString& suffix);
-    QString RemoveTrailingZeroes(const QString &text);
-    QString NormalizeNumber(const QString &text);
+    QString RemoveTrailingZeroes(const QString& text);
+    QString NormalizeNumber(const QString& text);
     void SetOperation(Operation op);
     QString OpToString(Operation op);
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow* ui;
     Calculator calculator_;
     QString input_number_;
-    double active_number_;
+    Number active_number_;
     Operation current_operation_ = Operation::NO_OPERATION;
     QString memory_;
 };
