@@ -1,33 +1,38 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
+
+#include "calculator.h"
+#include "enums.h"
 
 #include <QMainWindow>
-#include <calculator.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-    class MainWindow;
+class MainWindow;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow
+{
     Q_OBJECT
 
 public:
-    MainWindow(QWidget* parent = nullptr);
+    MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    //методы для изменения текста
+    void SetInputText(const std::string& text);
+    void SetErrorText(const std::string& text);
+    void SetFormulaText(const std::string& text);
+    void SetMemText(const std::string& text);
+    void SetExtraKey(const std::optional<std::string>& key);
 
-public:
-    enum class Operation {
-        NO_OPERATION,
-        ADDITION,
-        SUBTRACTION,
-        MULTIPLICATION,
-        DIVISION,
-        POWER
-    };
+    //методы для установки колбэк-функций
+    void SetDigitKeyCallback(std::function<void(int key)> cb);
+    void SetProcessOperationKeyCallback(std::function<void(Operation key)> cb);
+    void SetProcessControlKeyCallback(std::function<void(ControlKey key)> cb);
+    void SetControllerCallback(std::function<void(ControllerType controller)> cb);
 
 private slots:
+
     void on_btn_0_clicked();
     void on_btn_1_clicked();
     void on_btn_2_clicked();
@@ -38,34 +43,27 @@ private slots:
     void on_btn_7_clicked();
     void on_btn_8_clicked();
     void on_btn_9_clicked();
-    void on_btn_dot_clicked();
-    void on_dtn_del_clicked();
-    void on_btm_plus_minus_clicked();
-    void on_btn_pow_clicked();
-    void on_btn_div_clicked();
-    void on_btn_mul_clicked();
-    void on_btn_min_clicked();
     void on_btn_plus_clicked();
+    void on_btn_min_clicked();
+    void on_btn_mul_clicked();
+    void on_btn_div_clicked();
+    void on_btn_pow_clicked();
     void on_btn_equal_clicked();
+    void on_btn_del_clicked();
     void on_btn_clear_clicked();
-    void on_btn_ms_clicked();
-    void on_btn_mr_clicked();
+    void on_btm_plus_minus_clicked();
     void on_btn_mc_clicked();
+    void on_btn_mr_clicked();
+    void on_btn_ms_clicked();
+    void on_cmb_controller_currentIndexChanged(int index);
+
+    void on_tb_extra_clicked();
 
 private:
-    void SetText(const QString& text);
-    void AddText(const QString& suffix);
-    QString RemoveTrailingZeroes(const QString& text);
-    QString NormalizeNumber(const QString& text);
-    void SetOperation(Operation op);
-    QString OpToString(Operation op);
+    Ui::MainWindow *ui;
+    std::function<void(Operation key)> operation_cb_;
+    std::function<void(int key)> digit_cb_;
+    std::function<void(ControlKey key)> control_cb_;
+    std::function<void(ControllerType controller)> controller_cb_;
 
-private:
-    Ui::MainWindow* ui;
-    Calculator calculator_;
-    QString input_number_;
-    Number active_number_;
-    Operation current_operation_ = Operation::NO_OPERATION;
-    QString memory_;
 };
-#endif // MAINWINDOW_H
